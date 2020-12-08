@@ -1,23 +1,29 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.awt.event.ActionEvent;
-import java.beans.EventHandler;
+import javax.swing.*;
 import java.io.File;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+
 
 public class Main extends Application{
-
     Button button;
+    File selectedDirectory;
+
+    public static void main (String[]args){
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -26,6 +32,9 @@ public class Main extends Application{
         int height = 275;
         String titleName = "Main Window";
         String buttonText = "Click Here";
+
+        //File Chooser
+        DirectoryChooser directoryChooser = new DirectoryChooser();
 
         //Button
         button = new Button(buttonText);
@@ -39,16 +48,9 @@ public class Main extends Application{
         primaryStage.setScene(primaryScene);
         primaryStage.show();
 
-        //Button Event Handler
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event){
-                System.out.println("It works");
-            }
+        button.setOnAction(e -> {
+            selectedDirectory = directoryChooser.showDialog(primaryStage);
+            System.out.println(selectedDirectory);
         });
-
-        public static void main (String[]args){
-            launch(args);
-        }
     }
 }
