@@ -22,6 +22,7 @@ public class Main extends Application{
     File selectedDirectory;
 
     public static void main (String[]args){
+
         launch(args);
     }
 
@@ -50,7 +51,9 @@ public class Main extends Application{
 
         button.setOnAction(e -> {
             selectedDirectory = directoryChooser.showDialog(primaryStage);
-            System.out.println(selectedDirectory);
+            Folder folder = new Folder(selectedDirectory);
+            folder.fetchFiles();
+            folder.printFiles();
         });
     }
 }
