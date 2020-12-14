@@ -22,7 +22,6 @@ public class Main extends Application{
     File selectedDirectory;
 
     public static void main (String[]args){
-
         launch(args);
     }
 
@@ -53,7 +52,8 @@ public class Main extends Application{
             selectedDirectory = directoryChooser.showDialog(primaryStage);
             Folder folder = new Folder(selectedDirectory);
             folder.fetchFiles();
-            folder.printFiles();
+            System.out.println(folder.fetchCatergory("vbx"));
+            System.out.println(folder.fetchCatergory("false"));
         });
     }
 }
