@@ -61,6 +61,7 @@ public class Folder {
         }
         System.out.println("Files fetched");
     }
+
     public String fetchExtension(File file){
         String name = file.getName();
         int lastIndexOf = name.lastIndexOf(".");
@@ -83,6 +84,24 @@ public class Folder {
         }
     }
 
+    public void makeFolder(String foldername){
+        File file = new File(directory+"\\"+foldername);
+        if(!file.exists()){
+            if(file.mkdir()){
+                System.out.println("Directories are created!");
+            }else{
+                System.out.println("Directories are not created!");
+            }
+        }else{
+            System.out.println("Directories already exist!");
+        }
+    }
+
+    public void moveFile(String fileDestination, String destination){
+        File a = new File(fileDestination);
+        a.renameTo(new File(destination+"\\"+a.getName()));
+        a.delete();
+    }
 
     public void printFiles(){
         System.out.println("Printing files...");

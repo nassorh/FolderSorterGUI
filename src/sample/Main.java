@@ -52,8 +52,9 @@ public class Main extends Application{
             selectedDirectory = directoryChooser.showDialog(primaryStage);
             Folder folder = new Folder(selectedDirectory);
             folder.fetchFiles();
-            System.out.println(folder.fetchCatergory("vbx"));
-            System.out.println(folder.fetchCatergory("false"));
+            folder.makeFolder("Test");
+            String des = selectedDirectory + "\\" + "Test";
+            folder.moveFile("E:\\Portfolio\\Mindmap\\FolderSorterGUI.drawio",des);
         });
     }
 }
