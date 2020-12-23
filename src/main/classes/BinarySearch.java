@@ -1,10 +1,11 @@
-package sample;
+package main.classes;
 
 import java.util.List;
 
 class BinarySearch {
     public static int binarySearch(List arr, String extension, int first, int last){
         //Postcondition returns the index of the position of the extension in the database array
+        extension = extension.replace(".","");
         if (first>last){
             return -1;
         }else{

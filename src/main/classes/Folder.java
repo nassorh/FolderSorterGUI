@@ -1,15 +1,15 @@
-package sample;
+package main.classes;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Folder {
     File directory;
+
     //Init database
-    ArrayList<File> files = new ArrayList<File>();
+    public ArrayList<File> files = new ArrayList<File>();
     List<String> database = Arrays.asList("264:15","3dm:2","3ds:2","3g2:15","3ga:1","3gp:15","3gpp:15","7z:0","8bi:9","Rasterimagefileformats:11"
             ,"Vectorimagefileformats:14","aa:1","aac:1","aae:3","aax:1","accdb:4","ace:0","acsm:7","act:12","adoc:6","adpcm:1","adt:3","aep:15",
             "ai:14","aif:1","aifc:1","aiff:1","air:8","amr:1","amv:15","ani:14","apa:5","ape:1","api:12","apk:0","apnx:7","app:8","approj:9","arf:15",
@@ -46,20 +46,29 @@ public class Folder {
             "vproj:15","vsd:14","wav:1","wbmp:11","webarchive:16","webloc:16","webm:15","webp:11","wk3:13","wks:13","wlmp:15","wma:1","wmf:14","wmv:15","wp5:6",
             "wpd:6","wpg:14","wps:6","wsf:8","wwp:5","xap:5","xcf:11","xcodeproj:5","xesc:15","xfdl:16","xhtml:16","xib:5","xll:9","xlr:13","xls:13","xlsb:13",
             "xlsm:13","xlsx:13","xmind:3","xml:6","xps:6","xq:5","xspf:1","xt:5","yml:5","yuv:11","zip:0","zipx:0");
-    List<String> categories = Arrays.asList("Archivefileformats","Audiofileformats","CADfileformats","Datafileformats","Databasefileformats",
-            "Developerfileformats","Documentfileformats","eBookfileformats","Executablesfileformats","Miscfileformats","PageLayoutfileformats",
-            "Presentationfileformats","Settingsfileformats","Spreadsheetfileformats","Systemfileformats","Videofileformats","Websitefileformats");
+    List<String> categories = Arrays.asList("Archive file formats","Audio file formats","CAD file formats",
+            "Data file formats","Database file formats",
+            "Developer file formats","Document file formats","eBook file formats","Executables file formats",
+            "Misc file formats","Page Layout file formats",
+            "Presentation file formats","Settings file formats","Spreadsheet file formats","System file formats",
+            "Video file formats","Website file formats");
     //Constructor for initialise the directory path
     public Folder(File directory) {
-        this.directory = directory;
+        if( directory.isDirectory()){
+            this.directory = directory;
+        }
     }
 
-    public void fetchFiles() {
-        File[] folder = directory.listFiles();
-        for (int i = 0; i < folder.length; i++) {
-            files.add(folder[i]);
+    public int fetchFiles() {
+        try{
+            File[] folder = directory.listFiles();
+            for (int i = 0; i < folder.length; i++) {
+                files.add(folder[i]);
+            }
+            return 0;
+        } catch (Exception e) {
+            return -1;
         }
-        System.out.println("Files fetched");
     }
 
     public String fetchExtension(File file){
@@ -84,23 +93,47 @@ public class Folder {
         }
     }
 
-    public void makeFolder(String foldername){
+    public int makeFolder(String foldername){
         File file = new File(directory+"\\"+foldername);
         if(!file.exists()){
             if(file.mkdir()){
                 System.out.println("Directories are created!");
+                return 0;
             }else{
                 System.out.println("Directories are not created!");
+                return -1;
             }
         }else{
             System.out.println("Directories already exist!");
+            return -0;
         }
     }
 
-    public void moveFile(String fileDestination, String destination){
-        File a = new File(fileDestination);
-        a.renameTo(new File(destination+"\\"+a.getName()));
-        a.delete();
+    public int moveFile(String fileDestination, String destination){
+        File file = new File(fileDestination);
+        if(file.exists()){
+            file.renameTo(new File(destination+"\\"+file.getName()));
+            file.delete();
+            return 0;
+        }else{
+            return -1;
+        }
+    }
+
+    public int getCatergoryAmount(){
+        return 0;
+    }
+
+    public int getAlphabetAmount(){
+        return 0;
+    }
+
+    public int getSizeAmount(){
+        return 0;
+    }
+
+    public int getDateAmount(){
+        return 0;
     }
 
     public void printFiles(){
