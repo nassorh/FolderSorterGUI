@@ -39,6 +39,7 @@ public class FolderDetailsController implements Initializable {
 
     @FXML private PieChart chart;
 
+
     public void initialize(URL url, ResourceBundle rb){
         //Fetches the data
         load();
@@ -95,9 +96,10 @@ public class FolderDetailsController implements Initializable {
     public void addDataToPieChart(){
         //Piechart data
         ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
-        if(list.isEmpty()){
+        if(catergoryAmount.isEmpty()){
             list.add(new PieChart.Data("No Files Found",1));
         }else{
+            filesFound = true;
             //Adds data to the pieChart
             for(Map.Entry<String,Integer> data: catergoryAmount.entrySet()) {
                 if (data.getKey().length() == 0) {
