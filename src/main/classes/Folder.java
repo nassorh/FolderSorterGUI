@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Folder {
-    File directory;
+    public File directory;
 
     //Init database
     public ArrayList<File> files = new ArrayList<File>();

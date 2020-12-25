@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.FolderDetailsController">
    <children>
       <AnchorPane id="Logo" prefHeight="120.0" prefWidth="205.0" style="-fx-background-color: #26343A;">
          <children>
@@ -22,7 +21,7 @@
                   <Image url="@../Images/home.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="73.0" layoutY="200.0" onMousePressed="#folderGui" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="220.0" AnchorPane.topAnchor="200.0">
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="73.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="220.0" AnchorPane.topAnchor="200.0">
                <image>
                   <Image url="@../Images/folder.png" />
                </image>
@@ -35,21 +34,7 @@
          </children></AnchorPane>
       <AnchorPane layoutX="205.0" layoutY="-3.0" prefHeight="607.0" prefWidth="819.0">
          <children>
-            <Label layoutX="298.0" layoutY="286.0" text="Welcome Back">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="460.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Images/welcome.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="274.0" layoutY="321.0" text="To get started click the folder icon">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
+            <PieChart fx:id="chart" layoutX="197.0" layoutY="89.0" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
