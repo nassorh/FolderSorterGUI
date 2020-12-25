@@ -63,7 +63,9 @@ public class Folder {
         try{
             File[] folder = directory.listFiles();
             for (int i = 0; i < folder.length; i++) {
-                files.add(folder[i]);
+                if(folder[i].isFile()){
+                    files.add(folder[i]);
+                }
             }
             return 0;
         } catch (Exception e) {
@@ -109,31 +111,17 @@ public class Folder {
         }
     }
 
-    public int moveFile(String fileDestination, String destination){
+    public int moveFile(String fileDestination, String newDestination){
+        //Where the current file is
         File file = new File(fileDestination);
         if(file.exists()){
-            file.renameTo(new File(destination+"\\"+file.getName()));
+            //New Destination format "currentDir + "\\" + "folderName"
+            file.renameTo(new File(newDestination+"\\"+file.getName()));
             file.delete();
             return 0;
         }else{
             return -1;
         }
-    }
-
-    public int getCatergoryAmount(){
-        return 0;
-    }
-
-    public int getAlphabetAmount(){
-        return 0;
-    }
-
-    public int getSizeAmount(){
-        return 0;
-    }
-
-    public int getDateAmount(){
-        return 0;
     }
 
     public void printFiles(){

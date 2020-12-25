@@ -26,6 +26,26 @@ public class FolderController {
 
     private Stage stage;
 
+    public void home(MouseEvent mouseEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("../fxml/Main.fxml"));
+        Scene folder = new Scene(root);
+
+        //Fetches the window
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(folder);
+        stage.show();
+    }
+
+    public void setting(MouseEvent mouseEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("../fxml/Setting.fxml"));
+        Scene folder = new Scene(root);
+
+        //Fetches the window
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(folder);
+        stage.show();
+    }
+
     public void selectFolder(MouseEvent mouseEvent) throws IOException{
 
         //Opens the new scene

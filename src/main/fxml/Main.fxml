@@ -27,7 +27,7 @@
                   <Image url="@../Images/folder.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="73.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="350.0">
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="73.0" layoutY="350.0" onMousePressed="#setting" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="70.0" AnchorPane.topAnchor="350.0">
                <image>
                   <Image url="@../Images/settings.png" />
                </image>

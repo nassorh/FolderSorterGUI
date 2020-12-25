@@ -37,4 +37,14 @@ public class MainController {
         stage.show();
     }
 
+
+    public void setting(MouseEvent mouseEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("../fxml/Setting.fxml"));
+        Scene folder = new Scene(root);
+
+        //Fetches the window
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(folder);
+        stage.show();
+    }
 }
