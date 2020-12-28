@@ -36,18 +36,42 @@ public class FolderDetailsController implements Initializable {
     public HashMap<String, Integer> catergoryAmount = new HashMap<String, Integer>();
     private Boolean filesFound = false;
     private Stage stage;
+    ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
+    File selectedDirectory;
 
     @FXML private PieChart chart;
 
 
     public void initialize(URL url, ResourceBundle rb){
+        //Fetch the directory
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        selectedDirectory = directoryChooser.showDialog(Main.primaryStage);
+
+        //Class init
+
         //Fetches the data
-        load();
-        addDataToPieChart();
+        if(load(selectedDirectory)==0){
+            if(addDataToPieChart(catergoryAmount) != 0){
+                System.out.println("Display an error not being able to display the piechart");
+            }
+        }else{
+            System.out.println("Display an error with files not being able to be fetched ");
+        }
+
     }
 
     public void home(MouseEvent mouseEvent) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/Main.fxml"));
+        Scene folder = new Scene(root);
+
+        //Fetches the window
+        stage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
+        stage.setScene(folder);
+        stage.show();
+    }
+
+    public void folderGUI(MouseEvent mouseEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("../fxml/Folder.fxml"));
         Scene folder = new Scene(root);
 
         //Fetches the window
@@ -66,57 +90,73 @@ public class FolderDetailsController implements Initializable {
         stage.show();
     }
 
-    public void load(){
-        //Fetch the directory
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File selectedDirectory = directoryChooser.showDialog(Main.primaryStage);
-
-        //Class init
-        folder = new Folder(selectedDirectory);
-
-        //Fetch all the folders and finds how many files in each category
-        if(folder.fetchFiles() ==0){
-            for (File file : folder.files) {
-                String extension = folder.fetchExtension(file);
-                String catergory = folder.fetchCatergory(extension);
-
-                //Checking if word exists in the dictontary
-                Integer count = catergoryAmount.get(catergory);
-                if (count == null) {
-                    catergoryAmount.put(catergory, 1);
-                } else {
-                    catergoryAmount.put(catergory, count + 1);
+    public int load(File folderDirectory){
+        //Test if the directory exists
+        try{
+            folder = new Folder(folderDirectory);
+            if(folder.fetchFiles() ==0){
+                for (File file : folder.files) {
+                    String extension = folder.fetchExtension(file);//Fetch the extension
+                    String catergory = folder.fetchCatergory(extension);//Find the catergory
+                    Integer count = catergoryAmount.get(catergory);//Checking if catergory exists in the catergoryDict
+                    if (count == null) {
+                        catergoryAmount.put(catergory, 1);//If the catergory does not exists add to the catergoyDict
+                    } else {
+                        catergoryAmount.put(catergory, count + 1);//If the catergory exists increment the file number
+                        // by one
+                    }
                 }
+                return 0;
+            }else{
+                list.clear();
+                list.add(new PieChart.Data("No Files Found",1));
+                chart.setData(list);//An error that no files were found needs to be
+                // added here
+                filesFound = false;
+                return -1;
             }
-        }else{
-            System.out.println("Handle Error");
+        }catch (Exception e){
+            //Directory does not exist
+            System.out.println(e);
+            return -1;
         }
 
+
+
     }
-    public void addDataToPieChart(){
-        //Piechart data
-        ObservableList<PieChart.Data> list = FXCollections.observableArrayList();
-        if(catergoryAmount.isEmpty()){
-            list.add(new PieChart.Data("No Files Found",1));
-        }else{
-            filesFound = true;
-            //Adds data to the pieChart
-            for(Map.Entry<String,Integer> data: catergoryAmount.entrySet()) {
-                if (data.getKey().length() == 0) {
-                    list.add(new PieChart.Data("Unsorted", data.getValue()));
-                } else {
-                    list.add(new PieChart.Data(data.getKey(), data.getValue()));
+    public int addDataToPieChart(HashMap<String, Integer> dict){
+        try{
+            //Clears the list
+            list.clear();
+            //Piechart data
+            if(dict.isEmpty()){
+                list.add(new PieChart.Data("No Files Found",1));//No files exist in the folder error needs be added here
+                filesFound = false;
+            }else{
+                filesFound = true;
+                //Adds data to the pieChart
+                for(Map.Entry<String,Integer> data: dict.entrySet()) {
+                    if (data.getKey().length() == 0) {
+                        list.add(new PieChart.Data("Unsorted", data.getValue()));
+                    } else {
+                        list.add(new PieChart.Data(data.getKey(), data.getValue()));
+                    }
                 }
             }
+            chart.setData(list);
+        }catch (Exception e){
+            return -1;
         }
-        chart.setData(list);
+        return 0;
     }
 
-    public void sortFiles(ActionEvent actionEvent) {
+    public int sortFiles(ActionEvent actionEvent) {
+        //Sort files
         if(filesFound){
             //Make the folders
             for(Map.Entry<String,Integer> data: catergoryAmount.entrySet()){
-                folder.makeFolder(data.getKey());
+                if(folder.makeFolder(data.getKey()) == -1){System.out.println("Add an error that the folder could " +
+                        "not be maid"); return -1;}
             }
             for (File file : folder.files){
                 //Fetch the extension
@@ -135,6 +175,34 @@ public class FolderDetailsController implements Initializable {
             }
         }else{
             System.out.println("No files orgainsed");
+            return -1;
+        }
+        //Rescan
+        if(load(selectedDirectory)==0){
+            if(addDataToPieChart(catergoryAmount) != 0){
+                System.out.println("Display an error not being able to display the piechart");
+            }
+        }else{
+            System.out.println("Display an error with files not being able to be fetched ");
+        }
+
+        return 0;
+    }
+
+    public void newFolder(ActionEvent actionEvent) {
+        //Fetch the directory
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        selectedDirectory = directoryChooser.showDialog(Main.primaryStage);
+
+        //Class init
+
+        //Fetches the data
+        if(load(selectedDirectory)==0){
+            if(addDataToPieChart(catergoryAmount) != 0){
+                System.out.println("Display an error not being able to display the piechart");
+            }
+        }else{
+            System.out.println("Display an error with files not being able to be fetched ");
         }
 
     }

@@ -22,7 +22,7 @@
                   <Image url="@../Images/home.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="73.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="220.0" AnchorPane.topAnchor="200.0">
+            <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="73.0" layoutY="200.0" onMousePressed="#folderGUI" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="220.0" AnchorPane.topAnchor="200.0">
                <image>
                   <Image url="@../Images/folder.png" />
                </image>
@@ -36,7 +36,8 @@
       <AnchorPane layoutX="205.0" layoutY="-3.0" prefHeight="607.0" prefWidth="819.0">
          <children>
             <PieChart fx:id="chart" layoutX="160.0" layoutY="104.0" />
-            <Button layoutX="376.0" layoutY="533.0" mnemonicParsing="false" onAction="#sortFiles" text="Organise " />
+            <Button layoutX="438.0" layoutY="533.0" mnemonicParsing="false" onAction="#sortFiles" text="Organise " />
+            <Button layoutX="272.0" layoutY="533.0" mnemonicParsing="false" onAction="#newFolder" text="Select another folder" />
          </children></AnchorPane>
    </children>
 </AnchorPane>

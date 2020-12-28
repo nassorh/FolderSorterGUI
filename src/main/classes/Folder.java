@@ -53,21 +53,28 @@ public class Folder {
             "Presentation file formats","Settings file formats","Spreadsheet file formats","System file formats",
             "Video file formats","Website file formats");
     //Constructor for initialise the directory path
-    public Folder(File directory) {
+    public Folder(File directory) throws Exception {
         if( directory.isDirectory()){
             this.directory = directory;
+        }else{
+            throw new Exception("Invaild Directory");
         }
     }
 
     public int fetchFiles() {
         try{
             File[] folder = directory.listFiles();
+
             for (int i = 0; i < folder.length; i++) {
                 if(folder[i].isFile()){
                     files.add(folder[i]);
                 }
             }
-            return 0;
+            if(files.size() == 0){
+                return -1;
+            }else{
+                return 0;
+            }
         } catch (Exception e) {
             return -1;
         }
@@ -99,15 +106,12 @@ public class Folder {
         File file = new File(directory+"\\"+foldername);
         if(!file.exists()){
             if(file.mkdir()){
-                System.out.println("Directories are created!");
                 return 0;
             }else{
-                System.out.println("Directories are not created!");
                 return -1;
             }
         }else{
-            System.out.println("Directories already exist!");
-            return -0;
+            return 0;
         }
     }
 
